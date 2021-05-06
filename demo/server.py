@@ -2,7 +2,7 @@
 # Ce serveur attend la connexion d'un client
 import socket
 import sys
-HOST = socket.gethostbyname(socket.gethostname)
+HOST = socket.gethostbyname(socket.gethostname())
 PORT = 50000
 counter = 0
 # compteur de connexions actives
@@ -16,7 +16,7 @@ except socket.error:
     sys.exit
 while 1:
     # 3) Attente de la requête de connexion d'un client :
-    print("Serveur prêt, en attente de requêtes ...")
+    print(f"Serveur prêt sur {HOST}, en attente de requêtes ...")
     mySocket.listen(2)
     # 4) Etablissement de la connexion :
     connexion, adresse = mySocket.accept()
