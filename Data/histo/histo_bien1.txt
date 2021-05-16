@@ -1,6 +1,6 @@
-1   200 fail
-2   300 fail
-1   400 fail
-2   450 fail
-3   1000    fail
-2   1200    success
+1	200	fail
+2	300	fail
+1	400	fail
+2	450	fail
+3	1000	fail
+2  	1200	success
