@@ -7,8 +7,8 @@ import client_menus
 
 #HOST = input("Please specify the IP Address of the server ")
 #PORT = 50000
-HOST = "18.189.106.45"
-PORT = 15616
+HOST = "127.0.0.1"
+PORT = 50000
 
 
 class RecieveThread(threading.Thread):
@@ -26,7 +26,7 @@ class RecieveThread(threading.Thread):
             if "[SERVER]:END" in message_recu:
                 break
             if "[SERVER]:Auction Session Ended" in message_recu:
-                th_send.stoprequest.set()
+                pass
             if "[SERVER]:NEW BID" in message_recu:
                 pass
         th_send._stop()
