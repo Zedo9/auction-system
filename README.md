@@ -15,7 +15,7 @@ Description (TODO).
   - [x] Configuration
   - [x] Async Communication
   - [ ] Starting the auction session + Auction logic + Messages Exchange
-  - [ ] Writing logs to text files
+  - [x] Writing logs to text files
   - [ ] Managing concurrent writing to text files
-  - [ ] Sending reciepts
+  - [x] Sending reciepts
   - [ ] Find a solution to close the session after finishing

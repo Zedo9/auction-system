@@ -1,21 +1,25 @@
 import os
 
 ############ Processing Bien.txt ############
+
+
 def bienMenuAnnouncmentItems():     # creates a menu for the Server to choose the Product to sell
     with open("Data/bien.txt", 'r') as fRead:
         lines = fRead.readlines()
     available = list()
     for line in lines:
         item = line.split('\t')
-        if item[3].lower()=="disponible":
+        if item[3].lower() == "disponible":
             available.append(item[0])
     # menu
     print("**************************")
     print("Available items for selling")
     print('\n'.join(available))
-    print("**************************")    
-        
-def getInfoProduct(idProduct):      # returns a list of all informations: [prix  de  départ,  dernier  prix,  état et l’identificateur de son acheteur s’il est vendu]
+    print("**************************")
+
+
+# returns a list of all informations: [prix  de  départ,  dernier  prix,  état et l’identificateur de son acheteur s’il est vendu]
+def getInfoProduct(idProduct):
     with open("Data/bien.txt", 'r') as fRead:
         line = [element.rstrip().split('\t')
                 for element in fRead.readlines()
@@ -25,8 +29,10 @@ def getInfoProduct(idProduct):      # returns a list of all informations: [prix 
         return line[0]
     except:
         return [str(idProduct), '0', '0', '0']
-    
-def changeProductStatus(idProduct):  # change the ETAT of the product in bien.txt from dispo to vendu
+
+
+# change the ETAT of the product in bien.txt from dispo to vendu
+def changeProductStatus(idProduct):
     STATUS = "vendu"
     newFileLines = list()
     with open("Data/bien.txt", 'r') as fRead:   # reading
@@ -40,7 +46,9 @@ def changeProductStatus(idProduct):  # change the ETAT of the product in bien.tx
     with open("Data/bien.txt", 'w') as fWrite:  # writing
         fWrite.writelines(newFileLines)
 
-def changeBuyerID(idProduct, idClient):    # change the buyer ID in bien.txt from 0 to Client ID of the buyer
+
+# change the buyer ID in bien.txt from 0 to Client ID of the buyer
+def changeBuyerID(idProduct, idClient):
     newFileLines = list()
     with open("Data/bien.txt", 'r') as fRead:   # reading
         lines = fRead.readlines()
@@ -54,21 +62,29 @@ def changeBuyerID(idProduct, idClient):    # change the buyer ID in bien.txt fro
         fWrite.writelines(newFileLines)
 
 ############ Processing Histo_bien.txt ############
-def createHistoProduct(idProduct):  # creates a Histo file of a product if it doesn't exist
+
+
+# creates a Histo file of a product if it doesn't exist
+def createHistoProduct(idProduct):
     if not os.path.exists(f"Data/histo/histo_bien{idProduct}.txt"):
         fWrite = open(f"Data/histo/histo_bien{idProduct}.txt", 'w')
         fWrite.close()
-        
-def addClientRequestToHistoProduct(idProduct, idClient, price):    # add a Client to a request line without STATUS
+
+
+# add a Client to a request line without STATUS
+def addClientRequestToHistoProduct(idProduct, idClient, price):
     fWrite = open(f"Data/histo/histo_bien{idProduct}.txt", 'a')
     fWrite.write(f"{idClient}\t{price}\t")
     fWrite.close()
-    
-def addProductRequestStatus(idProduct, STATUS): # add a STATUS to a request line in Histo
+
+
+# add a STATUS to a request line in Histo
+def addProductRequestStatus(idProduct, STATUS):
     fWrite = open(f"Data/histo/histo_bien{idProduct}.txt", 'a')
     fWrite.write(f"{STATUS}\n")
     fWrite.close()
-    
+
+
 def getHistoProduct(idProduct):     # get the histo of a given product
     msg = f"this is the log file for the product {idProduct}:\n"
     try:
@@ -77,6 +93,7 @@ def getHistoProduct(idProduct):     # get the histo of a given product
         return msg + content
     except:
         return f"the log file for the product {idProduct} does not exist!"
+
 
 """    
 def LastPrice(idProduct):   # returns last price of a product
@@ -87,11 +104,15 @@ def LastPrice(idProduct):   # returns last price of a product
 """
 
 ############ Processing Facture.txt ############
+
+
 def addClientToBill(id):     # add a client to Facture with initialization
     with open("Data/facture.txt", 'a') as fAppend:
         fAppend.write(f"\n{str(id)}\t0")
-        
-def addAmountToBill(idBuyer, price):    # modify the client sum price in facture.txt from 0 to somme a payer
+
+
+# modify the client sum price in facture.txt from 0 to somme a payer
+def addAmountToBill(idBuyer, price):
     newFileLines = list()
     with open("Data/facture.txt", 'r') as fRead:   # reading
         lines = fRead.readlines()
@@ -105,41 +126,43 @@ def addAmountToBill(idBuyer, price):    # modify the client sum price in facture
         newFileLines.append(line)
     with open("Data/facture.txt", 'w') as fWrite:  # writing
         fWrite.writelines(newFileLines)
-               
+
+
 def getClientBill(idClient):    # return a STRING message about factur
     with open("Data/facture.txt", 'r') as fRead:   # reading
         line = [element.rstrip()
                 for element in fRead
                 if element.split('\t')[0] == str(idClient)]    # returns a list of one element
-    return f"The bill of {idClient} Client is:\n{line[0]}"
+    # return f"The bill of {idClient} Client is:\n{line[0]}"
+    return line[0]
 
 
 ############ TEST ############
 
 ############ Server ############
-#bienMenuAnnouncmentItems()     # return null: it prints a menu
+# bienMenuAnnouncmentItems()     # return null: it prints a menu
 
-#idProduct, startPrice, finalPrice, idBuyer = getInfoProduct(2)     # return a list of 4 items
+# idProduct, startPrice, finalPrice, idBuyer = getInfoProduct(2)     # return a list of 4 items
 #print(idProduct, startPrice, finalPrice, idBuyer)
 
-#addClientToBill(4)     # return null: check facture.txt
+# addClientToBill(4)     # return null: check facture.txt
 
-#createHistoProduct(5)      # return null: check file structure
+# createHistoProduct(5)      # return null: check file structure
 
-#addClientRequestToHistoProduct(4, 3, 500)      # return null: check histo file of the product
-#addProductRequestStatus(4, "fail")             # return null: check histo file of the product
+# addClientRequestToHistoProduct(4, 3, 500)      # return null: check histo file of the product
+# addProductRequestStatus(4, "fail")             # return null: check histo file of the product
 #addClientRequestToHistoProduct(4, 5, 600)
 #addProductRequestStatus(4, "success")
 
-#changeProductStatus(2)     # return null: check bien.txt
+# changeProductStatus(2)     # return null: check bien.txt
 
-#changeBuyerID(1, 4)    # return null: check bien.txt
+# changeBuyerID(1, 4)    # return null: check bien.txt
 
-#addAmountToBill(2, 700)    # return null: check facture.txt
+# addAmountToBill(2, 700)    # return null: check facture.txt
 
-#print(getClientBill(2))    # return string: facture d'un client
+# print(getClientBill(2))    # return string: facture d'un client
 
-#print(getHistoProduct(1))   # return string: histo d'un bien
+# print(getHistoProduct(1))   # return string: histo d'un bien
 
 ############ Client ############
-#print(getClientBill(2))
+# print(getClientBill(2))
