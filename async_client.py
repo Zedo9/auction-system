@@ -5,13 +5,9 @@ import threading
 from time import sleep
 import client_menus
 
-<<<<<<< HEAD
-HOST = '18.189.106.45'
-=======
 #HOST = input("Please specify the IP Address of the server ")
 #PORT = 50000
 HOST = "18.189.106.45"
->>>>>>> e84245889645d84e1aee66469592ff1539397d44
 PORT = 15616
 
 
