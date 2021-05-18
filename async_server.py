@@ -8,7 +8,7 @@ import threading
 import pickle
 import actions
 
-HOST = socket.gethostbyname(socket.gethostname())
+HOST = '127.0.0.1'
 CLIENTS_MAX = int(input("How many clients will be connecting? "))
 CLIENTS_COUNT = 0
 PORT = 50000

@@ -5,8 +5,8 @@ import threading
 from time import sleep
 import client_menus
 
-HOST = input("Please specify the IP Address of the server ")
-PORT = 50000
+HOST = '18.189.106.45'
+PORT = 15616
 
 
 class RecieveThread(threading.Thread):
