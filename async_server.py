@@ -18,7 +18,8 @@ CURRENT_PRODUCT = 0
 LOCK_LOG = threading.Lock()
 LOCK_BIEN = threading.Lock()
 LOCK_FACTURE = threading.Lock()
-LOCKS = {"facture":LOCK_FACTURE,"bien": LOCK_BIEN,"log": LOCK_LOG}
+LOCKS = {"facture": LOCK_FACTURE, "bien": LOCK_BIEN, "log": LOCK_LOG}
+
 
 class ClientThread(threading.Thread):
     def __init__(self, conn):
@@ -37,7 +38,7 @@ class ClientThread(threading.Thread):
             if msgClientDict["type"] == "disconnect":
                 break
             server_tools.handle_message(
-                msgClientDict, nom, th_time, self.connexion, conn_client,LOCKS )
+                msgClientDict, nom, th_time, self.connexion, conn_client, LOCKS)
         self.connexion.close()
         del conn_client[nom]
         print(f"Client {nom} disconnected.")
@@ -90,7 +91,7 @@ while choice != "3":
         th_time.join()
         server_tools.brodcast_message(
             f"Auction Session Ended for product {CURRENT_PRODUCT}", conn_client)
-        server_tools.handle_finish_session(conn_client, LOCKS,CURRENT_PRODUCT)
+        server_tools.handle_finish_session(conn_client, CURRENT_PRODUCT)
     if choice == "2":
         os.system('cls' if os.name == 'nt' else 'clear')
         actions.bienMenuAnnouncmentItems()
