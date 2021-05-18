@@ -38,7 +38,7 @@ def handle_finish_session(conn_client, current_product):
         client_id, amount = actions.replaceStatusToSuccess(current_product)
         actions.changeBuyerID(current_product, client_id)
         actions.addAmountToBill(client_id,amount)
-        brodcast_message(f"{extract_client_id_from_thread_name(client_id)} has acquired product {current_product} for {amount} Dinars",conn_client)
+        brodcast_message(f"{client_id} has acquired product {current_product} for {amount} Dinars",conn_client)
     except:
         pass
 
