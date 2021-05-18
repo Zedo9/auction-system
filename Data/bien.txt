@@ -1,0 +1,4 @@
+1	150	900.0	vendu	1
+2	800	900.0	vendu	1
+3	250	250	disponible	0
+4	500	500	disponible	0

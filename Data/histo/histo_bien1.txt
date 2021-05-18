@@ -1,0 +1,3 @@
+1	500.0		fail
+2	700.0		fail
+1	900.0		success
