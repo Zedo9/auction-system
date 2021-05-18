@@ -23,9 +23,7 @@ def handle_bid_message(msg, sender, th_time, sender_cnx, conn_client):
     # reset timer
     # else :
     # send message to sender declining the bid
-
-    print(msg)
-    print(sender)
+    brodcast_message(f"NEW BID : {msg}", conn_client)
     th_time.reset()
 
 

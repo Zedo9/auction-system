@@ -1,8 +1,8 @@
 def main_menu():
     print("************Menu******************")
-    print("1.Bid for a product")
-    print("2.Request a bill")
-    print("3.exit")
+    print("1.Bid for current product")
+    print("2.Check your bill")
+    print("3.Exit")
 
 
 def bid_for_product_menu():

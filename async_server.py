@@ -57,7 +57,7 @@ while 1:
     conn_client[it] = connexion
     print(
         f"Client {it} connected, IP Address {adresse[0]}, port {adresse[1]}.. ")
-    msg = "Succesfully joined the auction session"
+    msg = "Please wait for the auction session to start"
     connexion.send(msg.encode("Utf8"))
     if CLIENTS_COUNT == CLIENTS_MAX:
         break
@@ -68,7 +68,8 @@ while choice != "3":
     choice = input()
     if choice == "1":
         CURRENT_PRODUCT = int(input("Product ID? "))
-        th_time = timer_thread.TimerThread(TIMER)
+        th_time = timer_thread.TimerThread(
+            TIMER, conn_client, server_tools.brodcast_message)
         product_details = actions.getInfoProduct(CURRENT_PRODUCT)
         server_tools.brodcast_message(
             "Product details" +
@@ -77,13 +78,13 @@ while choice != "3":
             "\n" +
             f"start_price : {product_details[1]}" +
             "\n" +
-            "Countdown has started : 30 Seconds" +
+            "Countdown has started : 30 Seconds remaining" +
             "\n" +
-            "You may now interact with your interface", conn_client)
+            "You may now sumbit your bids", conn_client)
         th_time.start()
         th_time.join()
         server_tools.brodcast_message(
-            "Please be patient for the next session", conn_client)
+            f"Auction Session Ended for product {CURRENT_PRODUCT}", conn_client)
     if choice == "2":
         os.system('cls' if os.name == 'nt' else 'clear')
         actions.bienMenuAnnouncmentItems()
