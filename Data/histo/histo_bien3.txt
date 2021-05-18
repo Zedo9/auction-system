@@ -1,4 +1,0 @@
-1	250	fail
-2	300	fail
-3	400	fail
-2	500	success
