@@ -5,7 +5,8 @@ def main_menu():
     print("**********************Menu******************")
     print("1. Start an auction session for a product")
     print("2. Display current availabe products")
-    print("3. Exit")
+    print("3. Check the history of a product")
+    print("4. Exit")
 
 
 def brodcast_message(msg, clients_dic):
@@ -23,7 +24,7 @@ def handle_bid_message(msg, sender, th_time, sender_cnx, conn_client, LOCKS):
     if float(new_price) <= float(price):
         sender_cnx.send(f"Your bid value is less than the current price".encode("Utf-8"))
     else :
-        brodcast_message(f"NEW BID : {sender} made a bid with {new_price}!", conn_client)
+        brodcast_message(f"NEW BID : {client_id} made a bid with {new_price}!", conn_client)
         LOCKS["bien"].acquire()
         actions.updateCurrentPrice(msg["current_product"], new_price)
         LOCKS["bien"].release()
@@ -39,6 +40,7 @@ def handle_finish_session(conn_client, current_product):
         actions.changeBuyerID(current_product, client_id)
         actions.addAmountToBill(client_id,amount)
         brodcast_message(f"{client_id} has acquired product {current_product} for {amount} Dinars",conn_client)
+        print(f"{client_id} has acquired product {current_product} for {amount} Dinars")
     except:
         pass
 

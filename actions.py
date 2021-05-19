@@ -107,7 +107,7 @@ def getHistoProduct(idProduct):     # get the histo of a given product
             content = fRead.read()
         return msg + content
     except:
-        return f"the log file for the product {idProduct} does not exist!"
+        return f"the product {idProduct} still available for sell!"
   
 def LastPrice(idProduct):   # returns last price of a product
     with open(f"Data/histo/histo_bien{idProduct}.txt", 'r') as fRead:

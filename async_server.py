@@ -8,6 +8,16 @@ import threading
 import pickle
 import actions
 
+import sys
+try :
+    protocol = sys.argv[1]
+    if protocol.lower() not in ("tcp","udp"):
+        print("Please specify the communications protocol <tcp> or <udp>")
+        sys.exit()
+except:
+    protocol = "tcp"
+    pass
+
 HOST = '127.0.0.1'
 CLIENTS_MAX = int(input("How many clients will be connecting? "))
 CLIENTS_COUNT = 0
@@ -36,6 +46,7 @@ class ClientThread(threading.Thread):
             msgClientDict = pickle.loads(msgClient)
             msgClientDict["current_product"] = CURRENT_PRODUCT
             if msgClientDict["type"] == "disconnect":
+                server_tools.handle_request_bill_message(nom,self.connexion, LOCKS)
                 break
             server_tools.handle_message(
                 msgClientDict, nom, th_time, self.connexion, conn_client, LOCKS)
@@ -44,7 +55,8 @@ class ClientThread(threading.Thread):
         print(f"Client {nom} disconnected.")
 
 
-mySocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+PROTOCOLS = {"tcp": socket.SOCK_STREAM, "udp": socket.SOCK_DGRAM}
+mySocket = socket.socket(socket.AF_INET, PROTOCOLS[protocol])
 try:
     mySocket.bind((HOST, PORT))
 except socket.error:
@@ -67,7 +79,7 @@ while 1:
     if CLIENTS_COUNT == CLIENTS_MAX:
         break
 choice = "0"
-while choice != "3":
+while choice != "4":
     # os.system('cls' if os.name == 'nt' else 'clear')
     server_tools.main_menu()
     choice = input()
@@ -75,25 +87,34 @@ while choice != "3":
         CURRENT_PRODUCT = int(input("Product ID? "))
         th_time = timer_thread.TimerThread(
             TIMER, conn_client, server_tools.brodcast_message)
-        product_details = actions.getInfoProduct(CURRENT_PRODUCT)
-        actions.createHistoProduct(CURRENT_PRODUCT)
-        server_tools.brodcast_message(
-            "Product details" +
-            "\n" +
-            f"ID : {product_details[0]}" +
-            "\n" +
-            f"start_price : {product_details[1]}" +
-            "\n" +
-            "Countdown has started : 30 Seconds remaining" +
-            "\n" +
-            "You may now sumbit your bids", conn_client)
-        th_time.start()
-        th_time.join()
-        server_tools.brodcast_message(
-            f"Auction Session Ended for product {CURRENT_PRODUCT}", conn_client)
-        server_tools.handle_finish_session(conn_client, CURRENT_PRODUCT)
+        try:
+            product_details = actions.getInfoProduct(CURRENT_PRODUCT)
+            if product_details[-2] == "vendu":
+                print("This product was already sold")
+                continue
+            actions.createHistoProduct(CURRENT_PRODUCT)
+            server_tools.brodcast_message(
+                "Product details" +
+                "\n" +
+                f"ID : {product_details[0]}" +
+                "\n" +
+                f"start_price : {product_details[1]}" +
+                "\n" +
+                "Countdown has started : 30 Seconds remaining" +
+                "\n" +
+                "You may now sumbit your bids", conn_client)
+            th_time.start()
+            th_time.join()
+            server_tools.brodcast_message(
+                f"Auction Session Ended for product {CURRENT_PRODUCT}", conn_client)
+            server_tools.handle_finish_session(conn_client, CURRENT_PRODUCT)
+        except:
+            print("Error fetching product data")
     if choice == "2":
         os.system('cls' if os.name == 'nt' else 'clear')
         actions.bienMenuAnnouncmentItems()
+    if choice == "3":
+        product_id = int(input("Product ID? "))
+        print(actions.getHistoProduct(product_id))
 # All products are sold
 server_tools.brodcast_message("END", conn_client)
