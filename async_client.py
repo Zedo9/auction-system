@@ -67,7 +67,7 @@ class SendThread(threading.Thread):
                 data = {"type": "disconnect"}
                 pickled_data = pickle.dumps(data)
                 self.conn.send(pickled_data)
-                print("Disconnecting in 5 seconds")
+                break
 
     # def join(self, timeout=None):
     #     self.stoprequest.set()

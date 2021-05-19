@@ -47,6 +47,7 @@ class ClientThread(threading.Thread):
             msgClientDict["current_product"] = CURRENT_PRODUCT
             if msgClientDict["type"] == "disconnect":
                 server_tools.handle_request_bill_message(nom,self.connexion, LOCKS)
+                self.connexion.send("[SERVER]:END".encode("Utf-8"))
                 break
             server_tools.handle_message(
                 msgClientDict, nom, th_time, self.connexion, conn_client, LOCKS)
