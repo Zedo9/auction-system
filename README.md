@@ -1,6 +1,6 @@
 # Realtime Auction System
 
-Description (TODO).
+A simple CLI tool that simulates a realtime auction system between multiple clients and a central server using TCP sockets.
 
 ## Todo
 
