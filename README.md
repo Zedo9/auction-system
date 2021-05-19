@@ -9,7 +9,7 @@ Description (TODO).
   - [x] Configuration
   - [x] Async Communication
   - [x] Auction logic + Messages Exchange
-  - [ ] Find a solution to stopping the Sending Thread when "END" input is accepted
+  - [x] Find a solution to stopping the Sending Thread when "END" input is accepted
 
 - Server :
   - [x] Configuration
@@ -18,4 +18,4 @@ Description (TODO).
   - [x] Writing logs to text files
   - [x] Managing concurrent writing to text files
   - [x] Sending reciepts
-  - [ ] Find a solution to close the session after finishing
+  - [x] Find a solution to close the session after finishing
