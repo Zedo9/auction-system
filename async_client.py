@@ -18,8 +18,8 @@ except:
 
 #HOST = input("Please specify the IP Address of the server ")
 #PORT = 50000
-HOST = "127.0.0.1"
-PORT = 50000
+HOST = "52.14.18.129"
+PORT = 13923
 
 
 class RecieveThread(threading.Thread):
